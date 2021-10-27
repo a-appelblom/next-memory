@@ -45,12 +45,12 @@ export default function Home({ cards }) {
         cards.map((card) => {
           return (
             <div
+              key={card.code}
               onClick={() => {
                 setCards(card);
               }}
             >
               <Card
-                key={card.code}
                 image={card.image}
                 selected={getSelected(card)}
                 hasMatched={matched}
@@ -75,8 +75,6 @@ export async function getStaticProps() {
   const cards = await getData(
     `https://deckofcardsapi.com/api/deck/${deck.deck_id}/draw/?count=52`
   );
-  const newCards = cards.cards.map((card) => {
-    return { ...card, matched: false };
-  });
-  return { props: { cards: newCards } };
+
+  return { props: { cards: cards.cards } };
 }
